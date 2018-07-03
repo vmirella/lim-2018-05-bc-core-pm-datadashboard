@@ -1,4 +1,4 @@
-var welcome = document.getElementById('welcome');
+const welcome = document.getElementById('welcome');
 
 //aqui crea una variable obteniendo desde el id  del html
 //seleccion del nodo padre
