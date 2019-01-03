@@ -4,29 +4,29 @@ const welcome = document.getElementById('welcome');
 //seleccion del nodo padre
 const selectElement = document.getElementById("cohorts");
 //llamamos de forma asincrona el json de la lista de cohorts
-fetch('https://api.laboratoria.la/cohorts/')
+/*fetch('https://api.laboratoria.la/cohorts/')
 //fetch('../data/cohorts.json')
-  .then(response => response.json())
-  .then(json => {
-    const listCohorts = json;
-    //llamamos la funcion para que pase como argumentos los datos del json y creen un nodo de opction dentro de un select
-    for (let i = 0; i < listCohorts.length; i++) {
-      if (listCohorts[i].id.includes("lim-2018")) {
-        //creo el elemento option por cada cohort
-        const optionElements = document.createElement('option');
-        //creo el texto (nodo  de texto)
-        const contenidoOption = document.createTextNode(listCohorts[i].id);
-        //a la etiqueta padre le doy su hijo
-        optionElements.appendChild(contenidoOption);
-        optionElements.value = listCohorts[i].id
-        selectElement.appendChild(optionElements);
-      }
+.then(response => response.json())
+.then(json => {
+  const listCohorts = json;
+  //llamamos la funcion para que pase como argumentos los datos del json y creen un nodo de opction dentro de un select
+  for (let i = 0; i < listCohorts.length; i++) {
+    if (listCohorts[i].id.includes("lim-2018")) {
+      //creo el elemento option por cada cohort
+      const optionElements = document.createElement('option');
+      //creo el texto (nodo  de texto)
+      const contenidoOption = document.createTextNode(listCohorts[i].id);
+      //a la etiqueta padre le doy su hijo
+      optionElements.appendChild(contenidoOption);
+      optionElements.value = listCohorts[i].id
+      selectElement.appendChild(optionElements);
     }
-  })
-  .catch((err) => {
-    // algo salió mal...
-    console.error("failed", err);
-  });
+  }
+})
+.catch((err) => {
+  // algo salió mal...
+  console.error("failed", err);
+});*/
 
 let filterById = document.getElementById("orderByFilter");
 /* const fileCohort = '../data/cohorts.json';
@@ -39,7 +39,6 @@ const urls = [fileCohort, fileProgress, fileUsers];
 let cohorts = [];
 let progress = [];
 let users = [];
-const divFilters = document.getElementById('divfilter');
 const listStudents = document.getElementById('listStudents');
 const orderBy = document.getElementById('orderBy');
 const orderDirection = document.getElementById('orderDirection');
@@ -105,11 +104,9 @@ const loadStats = () => {
           user => user.signupCohort == idCohort
         );
         if(usersCohort.length == 0){
-          divFilters.style.display = 'none';
           listStudents.innerHTML ="<h2>Esta información no esta disponible</h2>";
           return;
         }
-        divFilters.style.display = 'block';
         let selectedCohort = cohorts.filter(
           cohort => cohort.id == idCohort
         );
@@ -128,16 +125,19 @@ const loadStats = () => {
           userWithStats => {
             //div card contenedor
             const divCard = document.createElement('div');
-            divCard.className = 'card';
+            divCard.className = 'card-student col-sm-3';
+
+            const divBorder = document.createElement('div');
+            divBorder.className = 'border-dark';
 
             //div avatar - imagen
             const divAvatar = document.createElement('div');
-            divAvatar.className = 'avatar';
+            divAvatar.className = 'card-img-top avatar';
             divAvatar.innerHTML = '<img src="imagen/avatar.png" alt="' + userWithStats.name + '">';
 
             //div stats - data de la alumna
             const divStats = document.createElement('div');
-            divStats.className = 'stats';
+            divStats.className = 'card-body stats';
 
             //parrafos y titulos
             const titleName = document.createElement('h3');
@@ -200,8 +200,10 @@ const loadStats = () => {
             divStats.appendChild(paragraph5);
 
             //añadimos imagen y stats a card
-            divCard.appendChild(divAvatar);
-            divCard.appendChild(divStats);
+            divBorder.appendChild(divAvatar);
+            divBorder.appendChild(divStats);
+
+            divCard.appendChild(divBorder);
 
             listStudents.appendChild(divCard);
           }
